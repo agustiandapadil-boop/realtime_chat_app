@@ -13,56 +13,56 @@ Route::get('/', function () {
 });
 Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard', function () {
+Route::get('/dashboard', function () {
         return redirect('/chat');
     })->name('dashboard');
 
-    Route::get(
+Route::get(
         '/profile',
         [ProfileController::class, 'edit']
     )->name('profile.edit');
 
-    Route::patch(
-        '/profile',
-        [ProfileController::class, 'update']
+Route::patch(
+    '/profile',
+    [ProfileController::class, 'update']
     )->name('profile.update');
 
-    Route::delete(
-        '/profile',
+Route::delete(
+    '/profile',
         [ProfileController::class, 'destroy']
     )->name('profile.destroy');
 
-    Route::get(
-        '/chat',
+Route::get(
+    '/chat',
         [ChatController::class, 'index']
     )->name('chat');
 
-    Route::post(
-        '/send-message',
+Route::post(
+    '/send-message',
         [ChatController::class, 'send']
     )->name('send.message');
 
-    Route::post(
-        '/send-group-message',
+Route::post(
+    '/send-group-message',
         [ChatController::class, 'sendGroupMessage']
     )->name('send.group.message');
-    Route::post(
-        '/groups',
+Route::post(
+    '/groups',
         [GroupController::class, 'store']
     )->name('groups.store');
 
-    Route::delete(
-        '/groups/{group}/leave',
+Route::delete(
+    '/groups/{group}/leave',
         [GroupController::class, 'leave']
     )->name('groups.leave');
 
-    Route::get(
-        '/chat/private/{user}',
+Route::get(
+    '/chat/private/{user}',
         [ChatController::class, 'getPrivateMessages']
     )->name('chat.private.history');
 
-    Route::get(
-        '/chat/group/{group}',
+Route::get(
+    '/chat/group/{group}',
         [ChatController::class, 'getGroupMessages']
     )->name('chat.group.history');
 

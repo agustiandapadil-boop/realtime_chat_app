@@ -160,11 +160,11 @@ document.getElementById('chat-input-area')
     let response=await fetch('/chat/private/'+id);
     let data=await response.json();
 if(data.success){
-    data.messages.forEach((msg)=>{
-        appendMessage(
-            msg.message,
-            msg.sender_id=={{ auth()->id() }},
-            msg.sender.name
+data.messages.forEach((msg)=>{
+    appendMessage(
+        msg.message,
+        msg.sender_id=={{ auth()->id() }},
+        msg.sender.name
 );
 });
 }
@@ -197,7 +197,7 @@ function appendMessage(message,mine=false,sender=''){
     <div class="px-4 py-2 rounded-lg max-w-xs ${mine?'bg-purple-500 text-white':'bg-gray-300'}">
         ${!mine?`<div class="font-bold mb-1">${sender}</div>`:''}
         ${message}
-        </div>
+</div>
 </div>
 `;
     messages.scrollTop=messages.scrollHeight;
@@ -359,7 +359,7 @@ let response=await fetch('/groups',{
 })
     });
 let data=await response.json();
-    if(data.success){
+if(data.success){
     alert('Group berhasil dibuat');
     location.reload();
     }
