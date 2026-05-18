@@ -23,14 +23,14 @@ public function update(ProfileUpdateRequest $request): RedirectResponse
     if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
 }
-        $request->user()->save();
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    }
+    $request->user()->save();
+    return Redirect::route('profile.edit')->with('status', 'profile-updated');
+}
     
 public function destroy(Request $request): RedirectResponse
 {
-    $request->validateWithBag('userDeletion', [
-        'password' => ['required', 'current_password'],
+$request->validateWithBag('userDeletion', [
+    'password' => ['required', 'current_password'],
 ]);
 $user = $request->user();
         Auth::logout();

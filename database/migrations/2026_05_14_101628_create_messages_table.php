@@ -19,6 +19,6 @@ public function up(): void
     }
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+    Schema::dropIfExists('messages');
     }
 };

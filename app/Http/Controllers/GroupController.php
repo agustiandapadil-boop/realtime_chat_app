@@ -9,9 +9,9 @@ class GroupController extends Controller
 {
 public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'members' => 'required|array'
+$request->validate([
+    'name' => 'required',
+    'members' => 'required|array'
 ]);
     $group = Group::create([
     'name' => $request->name
@@ -30,9 +30,9 @@ return response()->json([
 }
 public function leave(Group $group)
     {
-        $group->users()->detach(auth()->id());
-        return response()->json([
-            'success' => true
+    $group->users()->detach(auth()->id());
+    return response()->json([
+        'success' => true
 ]);
 }
 }
