@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Events\GroupCreated;
 
 class GroupController extends Controller
 {
@@ -23,6 +24,7 @@ $request->validate([
     $group->users()->attach(
     $request->members
 );
+event(new GroupCreated($group));
 return response()->json([
     'success' => true,
     'group' => $group

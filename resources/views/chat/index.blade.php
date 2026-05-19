@@ -38,7 +38,7 @@
 @endforeach
 
 </div>
-<div class="border-t">
+<div id="group-list" class="border-t">
 <div class="p-4 font-bold">Grup Chat</div>
 
 @foreach($groups as $group)
@@ -259,9 +259,10 @@ else{
 });
 
 if(typeof window.Echo!=='undefined'){
+
 window.Echo.private('chat.{{ auth()->id() }}')
 .listen('.message.sent',(e)=>{
-    if(selectedUser==e.sender_id){
+if(selectedUser==e.sender_id){
     appendMessage(
         e.message,
         false,
@@ -269,6 +270,62 @@ window.Echo.private('chat.{{ auth()->id() }}')
 );
 }
 });
+
+Echo.channel('users')
+.listen('.user.registered', (e) => {
+
+if(e.id == {{ auth()->id() }}){
+    return;
+    }
+let userList = document.getElementById('user-list');
+let div = document.createElement('div');
+div.className =
+    'user-item p-4 border-b hover:bg-gray-100 cursor-pointer flex justify-between items-center';
+
+div.setAttribute(
+    'data-name',
+    e.name.toLowerCase()
+);
+div.setAttribute(
+    'onclick',
+    `selectUser(${e.id}, '${e.name}')`
+);
+div.innerHTML = `
+<div>
+    <div class="font-semibold">
+${e.name}
+</div>
+
+<div
+id="status-${e.id}"
+class="text-sm text-red-500">
+● Offline
+</div>
+</div>
+    `;
+    userList.prepend(div);
+
+});
+
+Echo.channel('groups')
+.listen('.group.created', (e) => {
+let groupList = document.getElementById('group-list');
+let div = document.createElement('div');
+div.className =
+    'p-4 border-b hover:bg-gray-100 flex justify-between items-center';
+div.innerHTML = `
+<div
+    onclick="selectGroup(${e.id}, '${e.name}')"
+    class="cursor-pointer flex-1">
+${e.name}
+</div>
+<button
+    onclick="leaveGroup(${e.id})"
+    class="text-xs text-red-500 hover:text-red-700 font-bold px-2 py-1 border border-red-500 rounded ml-2">Keluar</button>
+    `;
+    groupList.appendChild(div);
+});
+
 @foreach($groups as $group)
 window.Echo.private('group.{{ $group->id }}')
 .listen('.message.sent',(e)=>{
