@@ -307,25 +307,6 @@ class="text-sm text-red-500">
 
 });
 
-Echo.channel('groups')
-.listen('.group.created', (e) => {
-let groupList = document.getElementById('group-list');
-let div = document.createElement('div');
-div.className =
-    'p-4 border-b hover:bg-gray-100 flex justify-between items-center';
-div.innerHTML = `
-<div
-    onclick="selectGroup(${e.id}, '${e.name}')"
-    class="cursor-pointer flex-1">
-${e.name}
-</div>
-<button
-    onclick="leaveGroup(${e.id})"
-    class="text-xs text-red-500 hover:text-red-700 font-bold px-2 py-1 border border-red-500 rounded ml-2">Keluar</button>
-    `;
-    groupList.appendChild(div);
-});
-
 @foreach($groups as $group)
 window.Echo.private('group.{{ $group->id }}')
 .listen('.message.sent',(e)=>{
